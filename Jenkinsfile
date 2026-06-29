@@ -14,14 +14,14 @@ pipeline {
 
         stage('build-image') {
             steps {
-                sh "docker build -t dheeraj310702/jenkis-app:${BUILD_NUMBER} ."
+                sh "docker build -t dheeraj310702/jenkins-app:${BUILD_NUMBER} ."
             }
         }
 
         stage('push-image') {
             steps {
                 sh 'echo "$DOCKER_CRED_PSW" | docker login -u dheeraj310702 --password-stdin'
-                sh "docker push dheeraj310702/jenkis-app:${BUILD_NUMBER}"
+                sh "docker push dheeraj310702/jenkins-app:${BUILD_NUMBER}"
             }
         }
 
@@ -29,14 +29,14 @@ pipeline {
         //     steps {
         //         sh 'docker logout'
         //         sh 'echo "$DOCKER_CRED_PSW" | docker login -u dheeraj310702 --password-stdin'
-        //         sh "docker push dheeraj310702/jenkis-app:${BUILD_NUMBER}"
+        //         sh "docker push dheeraj310702/jenkins-app:${BUILD_NUMBER}"
         //     }
         // }
 
         
         stage('update-minikube') {
             steps {
-                sh "kubectl set image deployment/pd1 jenkis-demo=dheeraj310702/jenkis-app:${BUILD_NUMBER}"
+                sh "kubectl set image deployment/pd1 jenkins-demo=dheeraj310702/jenkins-app:${BUILD_NUMBER}"
             }
         }
     }
