@@ -24,26 +24,12 @@ pipeline {
                 sh "docker push dheeraj310702/jenkins-app:${BUILD_NUMBER}"
             }
         }
-
-        // stage('verify-build') {
-        //     steps {
-        //         sh 'docker logout'
-        //         sh 'echo "$DOCKER_CRED_PSW" | docker login -u dheeraj310702 --password-stdin'
-        //         sh "docker push dheeraj310702/jenkins-app:${BUILD_NUMBER}"
-        //     }
-        // }
-
         
         stage('update-minikube') {
             steps {
-                sh "kubectl set image deployment/pd1 jenkins-demo=dheeraj310702/jenkins-app:${BUILD_NUMBER}"
+                // Fixed the typo here: changed "jenkins-demo" to "jenkis-demo"
+                sh "kubectl set image deployment/pd1 jenkis-demo=dheeraj310702/jenkins-app:${BUILD_NUMBER}"
             }
         }
     }
-    
-    // post {
-    //     always {
-    //         sh 'docker logout'
-    //     }
-    // }
 }
